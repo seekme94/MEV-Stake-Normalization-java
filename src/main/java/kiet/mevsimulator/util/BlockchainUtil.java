@@ -1,4 +1,4 @@
-package util;
+package kiet.mevsimulator.util;
 
 import org.springframework.stereotype.Component;
 import org.web3j.protocol.Web3j;
@@ -7,6 +7,9 @@ import org.web3j.crypto.Credentials;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Transfer;
 import org.web3j.utils.Convert;
+
+import org.web3j.protocol.core.DefaultBlockParameter;
+import org.web3j.protocol.core.DefaultBlockParameterName;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -29,7 +32,7 @@ public class BlockchainUtil {
     }
 
     public BigInteger getBalance(String address) throws Exception {
-        return web3j.ethGetBalance(address, web3j.ethBlockNumber().send().getBlockNumber()).send().getBalance();
+        return web3j.ethGetBalance(address, DefaultBlockParameterName.LATEST).send().getBalance();
     }
 
     public String createAccount() throws Exception {

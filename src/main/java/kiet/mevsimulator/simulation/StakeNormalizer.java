@@ -1,4 +1,4 @@
-package simulation;
+package kiet.mevsimulator.simulation;
 
 import java.util.List;
 

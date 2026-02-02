@@ -1,4 +1,4 @@
-package simulation;
+package kiet.mevsimulator.simulation;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

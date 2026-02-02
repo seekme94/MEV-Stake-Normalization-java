@@ -1,6 +1,6 @@
-package metrics;
+package kiet.mevsimulator.metrics;
 
-import simulation.Entity;
+import kiet.mevsimulator.simulation.Entity;
 import java.util.List;
 
 public class MEVReport {

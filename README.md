@@ -1,4 +1,12 @@
-# MEV–Stake Normalization Simulator
+# Project Title
+
+## Objectives
+
+1. **Implement a robust data processing pipeline** that can handle large CSV files efficiently.
+2. **Provide a clean REST API** for querying processed data, using Spring Boot 3.x.
+3. **Ensure comprehensive unit and integration tests** with JUnit 5 and Mockito.
+4. **Document the build and deployment steps** clearly for CI/CD pipelines.
+
 
 ## Overview
 
@@ -46,36 +54,6 @@ This project addresses that gap by simulating:
 - Before-and-after MEV comparison
 
 ---
-
-## Project Structure
-
-```
-MEV-Stake-Normalization/
-├── src/
-│   └── main/
-│       └── java/
-│           ├── simulation/
-│           │   ├── Entity.java
-│           │   ├── Validator.java
-│           │   ├── Transaction.java
-│           │   ├── MEVEngine.java
-│           │   ├── StakeNormalizer.java
-│           │   └── SimulatorSetup.java
-│           ├── metrics/
-│           │   ├── ProbabilityCalculator.java
-│           │   └── MEVReport.java
-│           ├── util/
-│           │   └── BlockchainUtil.java
-│           └── Main.java
-│   └── test/
-│       └── java/
-│           └── simulation/
-│               ├── SimulatorSetupTest.java
-│               └── MEVEngineTest.java
-├── pom.xml
-├── docker-compose.yml
-└── README.md
-```
 
 ## How the Simulator Works
 

@@ -1,4 +1,4 @@
-package simulation;
+package kiet.mevsimulator.simulation;
 
 public class Entity {
     public String name;
@@ -14,6 +14,6 @@ public class Entity {
         this.totalStake = stake;
         this.effectiveStake = stake;
         this.mevEarned = 0.0;
-        this.blockchainAddress = ""; // Will be set later
+        this.blockchainAddress = "";
     }
 }

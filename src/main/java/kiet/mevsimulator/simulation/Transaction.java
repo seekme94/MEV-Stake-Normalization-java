@@ -1,4 +1,4 @@
-package simulation;
+package kiet.mevsimulator.simulation;
 
 public class Transaction {
     public Entity sender;

@@ -33,5 +33,5 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-    </dependencies></content>
-<parameter name="filePath">c:\Users\owais\workspace\mev-normalized-staking\pom.xml
+    </dependencies>
+</project>
