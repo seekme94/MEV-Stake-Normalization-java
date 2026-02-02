@@ -1,0 +1,23 @@
+This project aims to simulate the process of MEV (Maximum Extractable Value) on Ethereum blockchain.
+
+1. The simulation executes a function simulateMevDefault and another simulateMevNormalized function.
+
+2. The number of validator nodes and their categories are:
+Categories	Ethers	Total
+Whale	6,000	3
+Shark	3,000	5
+Dolphin	600	8
+Fish	300	13
+Octopu	60	21
+Crab	6	34
+Shrimp	1	55
+
+3. Additionally, there will be 1000 more accounts with ETH balance ranging from 0.1 to 1000 (normally distributed). These account will generate random transactions.
+
+4. A local Ganache node will be deployed using Docker containers to perform the simulation.
+
+5. The project will use Spring boot + Maven
+
+6. A separate BlockchainUtil.java class will provide all functions required to interact with the Ganache node.
+
+7. There should be moderate unit testing against the source code.
