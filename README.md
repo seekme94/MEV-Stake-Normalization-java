@@ -1,4 +1,12 @@
-# MEV–Stake Normalization Simulator
+# Project Title
+
+## Objectives
+
+1. **Implement a robust data processing pipeline** that can handle large CSV files efficiently.
+2. **Provide a clean REST API** for querying processed data, using Spring Boot 3.x.
+3. **Ensure comprehensive unit and integration tests** with JUnit 5 and Mockito.
+4. **Document the build and deployment steps** clearly for CI/CD pipelines.
+
 
 ## Overview
 
@@ -47,26 +55,6 @@ This project addresses that gap by simulating:
 
 ---
 
-## Project Structure
-
-MEV-Stake-Normalization/
-└── src/
-├── simulation/
-│ ├── Entity.java
-│ ├── Validator.java
-│ ├── Transaction.java
-│ ├── MEVEngine.java
-│ ├── StakeNormalizer.java
-│ └── SimulatorSetup.java
-├── metrics/
-│ ├── ProbabilityCalculator.java
-│ └── MEVReport.java
-└── Main.java
-
-
-
----
-
 ## How the Simulator Works
 
 1. **Entities** are created with different stake sizes
@@ -82,21 +70,31 @@ MEV-Stake-Normalization/
 ## Requirements
 
 - Java **JDK 17 or higher**
+- Apache Maven
+- Docker
 - Windows, macOS, or Linux
-- No external libraries required
 
-Check Java installation:
+## Build and Run the Project
+
+First, start Ganache:
 ```bash
-java -version
-Compile the Project
+docker-compose up -d
+```
 
-From the project root directory:
-javac src\simulation\*.java src\metrics\*.java src\Main.java
+Compile the project:
+```bash
+mvn clean compile
+```
 
+Run the simulator:
+```bash
+mvn spring-boot:run
+```
 
-Run the Simulator
-
-java -cp src Main
+Run tests:
+```bash
+mvn test
+```
 
 
 
