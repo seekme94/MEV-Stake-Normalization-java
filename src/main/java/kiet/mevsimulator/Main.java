@@ -8,6 +8,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.beans.factory.annotation.Autowired;
+import kiet.mevsimulator.util.CSVExporter;
+import kiet.mevsimulator.util.ExcelExporter;
+import kiet.mevsimulator.util.ResearchExcelExporter;
+import kiet.mevsimulator.util.ResearchExcelExporterPro;
+import java.util.stream.Collectors;
+
+
+
+
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -38,30 +47,73 @@ public class Main implements CommandLineRunner {
 
         // Create transactions from the 1000 accounts
         List<Entity> accountEntities = entities.subList(entities.size() - 1000, entities.size());
-        List<Transaction> transactions = createTransactions(accountEntities, 100_000);
+        List<Transaction> transactions = createTransactions(accountEntities, 100);
 
-        // Simulate default
+        //________________________________________________________________________________
+//        // Simulate default
+//        simulateMevDefault(entities, transactions);
+////        CSVExporter.exportEntities(entities, "default_mev_results.csv");
+////        ExcelExporter.export(entities, "default_results.xlsx");
+////        List<Entity> defaultCopy = new ArrayList<>(entities);
+////
+////        for (Entity e : entities) {
+////            e.mevEarned = 0;
+////        }
+//        List<Entity> defaultCopy = new ArrayList<>(entities);
+//        for (Entity e : entities) {
+//            e.mevEarned = 0;
+//        }
+//
+//
+//        // Reset
+//        for (Entity e : entities) {
+//            e.mevEarned = 0;
+//        }
+//
+//        // Simulate normalized
+//        simulateMevNormalized(entities, transactions);
+////        CSVExporter.exportEntities(entities, "normalized_mev_results.csv");
+//
+////        ExcelExporter.export(entities, "normalized_results.xlsx");
+////        ResearchExcelExporter.export(
+////                defaultCopy,
+////                entities,
+////                "research_results.xlsx"
+////        );
+//        ResearchExcelExporterPro.export(
+//                defaultCopy,
+//                entities,
+//                "MEV_Research_Report.xlsx"
+//        );
+        //--------------------------------------------------
         simulateMevDefault(entities, transactions);
 
-        // Reset
+// deep copy BEFORE resetting
+        List<Entity> defaultCopy = entities.stream()
+                .map(Entity::new)          // uses the copy constructor
+                .collect(Collectors.toList());
+
+// now safe to reset originals
         for (Entity e : entities) {
             e.mevEarned = 0;
         }
 
-        // Simulate normalized
         simulateMevNormalized(entities, transactions);
+
+// export using deep-copied default and current normalized
+        ResearchExcelExporterPro.export(defaultCopy, entities, "MEV_Research_Report.xlsx");
     }
 
     public void simulateMevDefault(List<Entity> entities, List<Transaction> transactions) throws Exception {
         List<Validator> validators = SimulatorSetup.createEntities(entities);
-        runSimulation(validators, transactions, 1000);
+        runSimulation(validators, transactions, 5, false);
         MEVReport.print(entities, "Default MEV Simulation");
     }
 
     public void simulateMevNormalized(List<Entity> entities, List<Transaction> transactions) throws Exception {
         StakeNormalizer.normalize(entities, 1600);
         List<Validator> validators = SimulatorSetup.createEntities(entities);
-        runSimulation(validators, transactions, 1000);
+        runSimulation(validators, transactions, 100,true);
         MEVReport.print(entities, "Normalized MEV Simulation");
     }
 
@@ -81,13 +133,18 @@ public class Main implements CommandLineRunner {
     public void runSimulation(
             List<Validator> validators,
             List<Transaction> transactions,
-            int blocks
+            int blocks,
+            boolean normalized
     ) throws Exception {
         for (int i = 0; i < blocks; i++) {
             Validator proposer = ProbabilityCalculator.pickProposer(validators);
 
             for (Transaction tx : transactions) {
-                proposer.owner.mevEarned += MEVEngine.extractMEV(tx);
+                if(normalized){
+                    proposer.owner.mevEarned += MEVEngine.extractMEVNormalized(tx);
+                }else{
+                    proposer.owner.mevEarned += MEVEngine.extractMEV(tx);
+                }
                 // Optionally send to blockchain
                 blockchainUtil.sendTransaction(tx.to, BigDecimal.valueOf(tx.value));
             }

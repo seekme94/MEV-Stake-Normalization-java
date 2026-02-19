@@ -38,8 +38,27 @@ public class SimulatorSetup {
     }
 
     public static List<Validator> createEntities(List<Entity> entities) {
+//        List<Validator> validators = new ArrayList<>();
+//        for (Entity e : entities) {
+//            int remaining = e.effectiveStake;
+//
+//            while (remaining >= 32) {
+//                validators.add(new Validator(e, 32));
+//                remaining -= 32;
+//            }
+//        }
+//
+//        return validators;
+//    }
         List<Validator> validators = new ArrayList<>();
+
         for (Entity e : entities) {
+
+            // Accounts are NOT validators
+            if (e.category.equals("Account")) {
+                continue;
+            }
+
             int remaining = e.effectiveStake;
 
             while (remaining >= 32) {
