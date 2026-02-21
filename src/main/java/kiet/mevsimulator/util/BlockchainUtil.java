@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.crypto.Credentials;
+import org.web3j.crypto.Keys;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Transfer;
 import org.web3j.utils.Convert;
@@ -36,11 +37,7 @@ public class BlockchainUtil {
     }
 
     public String createAccount() throws Exception {
-        // In Ganache, accounts are pre-created, but for simulation, we can use existing ones or generate new
-        // For simplicity, return a dummy address or use web3j to create
-        // Web3j doesn't have direct account creation, but we can use the pre-funded accounts
-        // For now, return one of the Ganache accounts
-        return "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1"; // Second account
+        return Credentials.create(Keys.createEcKeyPair()).getAddress();
     }
 
     public Web3j getWeb3j() {
